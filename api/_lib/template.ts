@@ -10,7 +10,7 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
 const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
-const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Regular.otf`).toString('base64');
+const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-bold.otf`).toString('base64');
 
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
@@ -47,7 +47,7 @@ function getCss(theme: string, fontSize: string) {
     @font-face {
         font-family: 'Noto Sans Japanese';
         font-style: normal;
-        font-weight: normal;
+        font-weight: bold;
         src: url(data:font/otf;charset=utf-8;base64,${noto})  format("opentype");
       }
 
@@ -108,7 +108,7 @@ function getCss(theme: string, fontSize: string) {
         font-style: normal;
         font-weight: bold;
         color: ${foreground};
-        line-height: 1.25;
+        line-height: 1.375;
     }`;
 }
 
