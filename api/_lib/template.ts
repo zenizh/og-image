@@ -103,16 +103,17 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .heading {
-        font-family: 'Inter', 'Noto Sans Japanese', sans-serif;
+        font-family: 'Noto Sans Japanese', 'Inter', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
+        font-weight: bold;
         color: ${foreground};
-        line-height: 1.8;
+        line-height: 1.25;
     }`;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
+    const { text, theme, md, fontSize } = parsedReq;
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -125,9 +126,7 @@ export function getHtml(parsedReq: ParsedRequest) {
         <div>
             <div class="spacer">
             <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
+                <img src="https://product-development.io/favicon.svg" width="auto" height="225" />
             </div>
             <div class="spacer">
             <div class="heading">${emojify(
@@ -137,18 +136,4 @@ export function getHtml(parsedReq: ParsedRequest) {
         </div>
     </body>
 </html>`;
-}
-
-function getImage(src: string, width ='auto', height = '225') {
-    return `<img
-        class="logo"
-        alt="Generated Image"
-        src="${sanitizeHtml(src)}"
-        width="${sanitizeHtml(width)}"
-        height="${sanitizeHtml(height)}"
-    />`
-}
-
-function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
 }
