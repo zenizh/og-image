@@ -13,9 +13,9 @@ const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('ba
 const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-bold.otf`).toString('base64');
 
 function getCss(theme: string, fontSize: string) {
-    let background = 'white';
-    let foreground = 'black';
-    let radial = 'lightgray';
+    let background = '#f9fafb';
+    let foreground = '#1f2937';
+    let radial = '#d1d5db';
 
     if (theme === 'dark') {
         background = 'black';
