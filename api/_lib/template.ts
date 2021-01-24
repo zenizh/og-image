@@ -1,28 +1,35 @@
+import { readFileSync } from 'fs'
+import marked from 'marked'
+import { sanitizeHtml } from './sanitizer'
+import { ParsedRequest } from './types'
+const twemoji = require('twemoji')
+const twOptions = { folder: 'svg', ext: '.svg' }
+const emojify = (text: string) => twemoji.parse(text, twOptions)
 
-import { readFileSync } from 'fs';
-import marked from 'marked';
-import { sanitizeHtml } from './sanitizer';
-import { ParsedRequest } from './types';
-const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
-const emojify = (text: string) => twemoji.parse(text, twOptions);
-
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
-const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Bold.otf`).toString('base64');
+const rglr = readFileSync(
+  `${__dirname}/../_fonts/Inter-Regular.woff2`
+).toString('base64')
+const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString(
+  'base64'
+)
+const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString(
+  'base64'
+)
+const noto = readFileSync(
+  `${__dirname}/../_fonts/NotoSansJP-Bold.otf`
+).toString('base64')
 
 function getCss(theme: string, fontSize: string) {
-    let background = '#f9fafb';
-    let foreground = '#1f2937';
-    let radial = '#d1d5db';
+  let background = '#f9fafb'
+  let foreground = '#1f2937'
+  let radial = '#d1d5db'
 
-    if (theme === 'dark') {
-        background = 'black';
-        foreground = 'white';
-        radial = 'dimgray';
-    }
-    return `
+  if (theme === 'dark') {
+    background = 'black'
+    foreground = 'white'
+    radial = 'dimgray'
+  }
+  return `
     @font-face {
         font-family: 'Inter';
         font-style:  normal;
@@ -109,12 +116,12 @@ function getCss(theme: string, fontSize: string) {
         font-weight: bold;
         color: ${foreground};
         line-height: 1.375;
-    }`;
+    }`
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize } = parsedReq;
-    return `<!DOCTYPE html>
+  const { text, theme, md, fontSize } = parsedReq
+  return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
@@ -126,14 +133,14 @@ export function getHtml(parsedReq: ParsedRequest) {
         <div>
             <div class="spacer">
             <div class="logo-wrapper">
-                <img src="https://product-development.io/favicon.svg" width="auto" height="225" />
+                <img src="https://product-development.io/favicon.png" width="auto" height="225" />
             </div>
             <div class="spacer">
             <div class="heading">${emojify(
-                md ? marked(text) : sanitizeHtml(text)
+              md ? marked(text) : sanitizeHtml(text)
             )}
             </div>
         </div>
     </body>
-</html>`;
+</html>`
 }
